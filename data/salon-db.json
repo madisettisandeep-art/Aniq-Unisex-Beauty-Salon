@@ -1191,6 +1191,67 @@
   ],
   "appointments": [
     {
+      "id": "app-1791710181203-5808",
+      "bookingReference": "ANIQ-26-5808",
+      "customerType": "men",
+      "customerName": "Sandeep Madisetti",
+      "customerPhone": "8466026779",
+      "customerEmail": "sandeep.siri21@gmail.com",
+      "specialInstructions": "dss",
+      "services": [
+        {
+          "id": "g-02",
+          "name": "Any Hair Cut (Men)",
+          "price": 199,
+          "durationMinutes": 30,
+          "categoryId": "grooming"
+        }
+      ],
+      "masterId": "master-01",
+      "masterName": "Sameer Khan",
+      "appointmentDate": "2026-10-13",
+      "appointmentTime": "11:00",
+      "totalDurationMinutes": 30,
+      "totalPrice": 199,
+      "status": "PENDING_CONFIRMATION",
+      "createdAt": "2026-10-11T09:16:21.203Z",
+      "updatedAt": "2026-10-11T09:16:21.203Z"
+    },
+    {
+      "id": "app-1791551228211-5096",
+      "bookingReference": "ANIQ-26-5096",
+      "customerType": "men",
+      "customerName": "sandeep",
+      "customerPhone": "08466026779",
+      "customerEmail": "sinfozsandy@gmail.com",
+      "specialInstructions": "",
+      "services": [
+        {
+          "id": "g-01",
+          "name": "Kids Hair Cut",
+          "price": 149,
+          "durationMinutes": 25,
+          "categoryId": "grooming"
+        },
+        {
+          "id": "g-02",
+          "name": "Any Hair Cut (Men)",
+          "price": 199,
+          "durationMinutes": 30,
+          "categoryId": "grooming"
+        }
+      ],
+      "masterId": "master-01",
+      "masterName": "Sameer Khan",
+      "appointmentDate": "2026-10-11",
+      "appointmentTime": "10:30",
+      "totalDurationMinutes": 55,
+      "totalPrice": 348,
+      "status": "PENDING_CONFIRMATION",
+      "createdAt": "2026-10-09T13:07:08.211Z",
+      "updatedAt": "2026-10-09T13:07:08.211Z"
+    },
+    {
       "id": "app-1791538916278-1633",
       "bookingReference": "ANIQ-26-1633",
       "customerType": "men",
@@ -1275,6 +1336,22 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1791710181203",
+      "timestamp": "2026-10-11T09:16:21.203Z",
+      "actor": "Sandeep Madisetti",
+      "action": "CREATE_APPOINTMENT",
+      "targetId": "ANIQ-26-5808",
+      "details": "Created appointment for Sandeep Madisetti on 2026-10-13 at 11:00"
+    },
+    {
+      "id": "log-1791551228211",
+      "timestamp": "2026-10-09T13:07:08.211Z",
+      "actor": "sandeep",
+      "action": "CREATE_APPOINTMENT",
+      "targetId": "ANIQ-26-5096",
+      "details": "Created appointment for sandeep on 2026-10-11 at 10:30"
+    },
     {
       "id": "log-1791538916396",
       "timestamp": "2026-10-09T09:41:56.396Z",

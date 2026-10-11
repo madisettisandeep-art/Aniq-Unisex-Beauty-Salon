@@ -12,46 +12,23 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'Date is required' }, { status: 400 });
     }
 
-    // Check operating hours
-    const settings = salonDb.getSettings();
-    const [openH, openM] = settings.operatingHours.openTime.split(':').map(Number);
-    const [closeH, closeM] = settings.operatingHours.closeTime.split(':').map(Number);
+    // Batch indexed lookup + server-side query cache (zero N+1 queries)
+    const candidateSlots = salonDb.getAvailableSlots(date, masterId, duration);
 
-    const openMin = openH * 60 + openM;
-    const closeMin = closeH * 60 + closeM;
-
-    // Check if requested date is today to filter out past slots
-    const now = new Date();
-    const todayStr = now.toISOString().split('T')[0];
-    const isToday = date === todayStr;
-    const currentMin = now.getHours() * 60 + now.getMinutes() + (settings.minNoticeHours * 60);
-
-    const candidateSlots: string[] = [];
-    const interval = 30; // 30-minute slot intervals
-
-    for (let m = openMin; m + duration <= closeMin; m += interval) {
-      if (isToday && m < currentMin) {
-        continue; // Skip past slots and slots within notice period
+    return NextResponse.json(
+      {
+        success: true,
+        date,
+        masterId,
+        duration,
+        slots: candidateSlots,
+      },
+      {
+        headers: {
+          'Cache-Control': 'public, max-age=15, stale-while-revalidate=60',
+        },
       }
-
-      const h = Math.floor(m / 60);
-      const min = m % 60;
-      const timeStr = `${h.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
-
-      // Check conflict
-      const hasConflict = salonDb.hasConflict(masterId, date, timeStr, duration);
-      if (!hasConflict) {
-        candidateSlots.push(timeStr);
-      }
-    }
-
-    return NextResponse.json({
-      success: true,
-      date,
-      masterId,
-      duration,
-      slots: candidateSlots
-    });
+    );
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message || 'Failed to calculate slots' },
@@ -59,4 +36,3 @@ export async function GET(request: NextRequest) {
     );
   }
 }
-

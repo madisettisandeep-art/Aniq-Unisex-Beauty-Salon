@@ -8,7 +8,7 @@ export const FloatingWhatsApp: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+    <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end">
       {/* Popover Card */}
       {isOpen && (
         <div className="mb-3 w-80 bg-white rounded-3xl border border-ivory-200 shadow-2xl p-5 text-charcoal animate-fadeIn">
@@ -69,13 +69,23 @@ export const FloatingWhatsApp: React.FC = () => {
         </div>
       )}
 
-      {/* Floating Trigger Button */}
+      {/* Floating WhatsApp Concierge Pill Button (Covers bottom-right watermark zone) */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Contact ANIQ Salon on WhatsApp"
-        className="w-14 h-14 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white shadow-xl hover:shadow-2xl flex items-center justify-center transition-all transform hover:scale-105 active:scale-95 border-2 border-white"
+        className="h-14 px-5 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white shadow-2xl flex items-center gap-3 transition-all transform hover:scale-[1.03] active:scale-95 border-2 border-white/90"
       >
-        <MessageSquare className="w-7 h-7 fill-white/20" />
+        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+          <MessageSquare className="w-4 h-4 fill-white" />
+        </div>
+        <div className="text-left pr-1">
+          <span className="block text-[9px] uppercase tracking-widest text-emerald-100 font-semibold leading-none mb-0.5">
+            Instant Booking
+          </span>
+          <span className="block text-xs font-bold tracking-wide whitespace-nowrap leading-none">
+            WhatsApp Us
+          </span>
+        </div>
       </button>
     </div>
   );

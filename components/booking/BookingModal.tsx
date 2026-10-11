@@ -25,7 +25,8 @@ import {
   Sparkles,
   Scissors
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
+import { fetchWithCache, invalidateClientCache } from '@/lib/cache/client-cache';
+import { SlotGridSkeleton } from '@/components/ui/Skeletons';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -67,13 +68,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   // Service Category Filter inside Modal
   const [activeCategoryFilter, setActiveCategoryFilter] = useState<string>('all');
 
-  // Load Services & Masters on Mount
+  // Load Services & Masters via Client Cache when Modal opens
   useEffect(() => {
+    if (!isOpen) return;
     async function loadData() {
       try {
         const [resServices, resMasters] = await Promise.all([
-          fetch('/api/services').then(r => r.json()),
-          fetch('/api/masters').then(r => r.json()),
+          fetchWithCache('/api/services', 60_000),
+          fetchWithCache('/api/masters', 60_000),
         ]);
 
         if (resServices.success) setServices(resServices.services);
@@ -83,7 +85,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
       }
     }
     loadData();
-  }, []);
+  }, [isOpen]);
 
   // Handle preselected service
   useEffect(() => {
@@ -108,17 +110,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const totalPrice = selectedServices.reduce((sum, s) => sum + (s.price ?? 0), 0);
   const totalDuration = selectedServices.reduce((sum, s) => sum + s.durationMinutes, 0);
 
-  // Fetch Available Slots when Date, Master, or Duration Changes
+  // Fetch Available Slots (Cached for 15s) when Date, Master, or Duration Changes
   useEffect(() => {
     if (currentStep === 5 && selectedDate) {
       const fetchSlots = async () => {
         setLoadingSlots(true);
         setErrorMessage('');
         try {
-          const res = await fetch(
-            `/api/slots?date=${selectedDate}&masterId=${selectedMasterId}&duration=${totalDuration || 30}`
+          const data = await fetchWithCache(
+            `/api/slots?date=${selectedDate}&masterId=${selectedMasterId}&duration=${totalDuration || 30}`,
+            15_000
           );
-          const data = await res.json();
           if (data.success) {
             setAvailableSlots(data.slots || []);
             if (data.slots.length > 0 && !data.slots.includes(selectedTime)) {
@@ -175,15 +177,24 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         return;
       }
 
+      // Invalidate client-side slot cache after booking
+      invalidateClientCache('/api/slots');
+
       setCreatedAppointment(data.appointment);
       setWhatsAppUrl(data.whatsAppUrl);
       setCurrentStep(8); // Success step
-      confetti({
-        particleCount: 80,
-        spread: 60,
-        origin: { y: 0.6 },
-        colors: ['#D4AF37', '#F3E5AB', '#B76E79']
-      });
+
+      // Defer non-critical confetti script until booking confirmation
+      import('canvas-confetti')
+        .then((mod) => {
+          mod.default({
+            particleCount: 80,
+            spread: 60,
+            origin: { y: 0.6 },
+            colors: ['#D4AF37', '#F3E5AB', '#B76E79']
+          });
+        })
+        .catch(() => {});
     } catch (err: any) {
       setErrorMessage(err.message || 'Network error creating booking.');
     } finally {
@@ -348,7 +359,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   <button
                     key={item.type}
                     onClick={() => setCustomerType(item.type as CustomerType)}
-                    className={`p-4.5 rounded-2xl border text-left transition-all ${
+                    className={`p-5 rounded-2xl border text-left transition-all ${
                       customerType === item.type
                         ? 'border-gold bg-gold/10 shadow-luxury'
                         : 'border-ivory-200 bg-white hover:border-beige hover:bg-cream-100/50'
@@ -603,9 +614,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
 
               {loadingSlots ? (
-                <div className="py-12 text-center text-charcoal-muted text-xs">
-                  <Clock className="w-6 h-6 text-gold animate-spin mx-auto mb-2" />
-                  Checking real-time master schedule availability...
+                <div className="space-y-3">
+                  <p className="text-center text-charcoal-muted text-xs">
+                    Checking real-time master schedule availability...
+                  </p>
+                  <SlotGridSkeleton />
                 </div>
               ) : availableSlots.length === 0 ? (
                 <div className="p-6 rounded-2xl bg-amber-50 border border-amber-200 text-center max-w-md mx-auto">
@@ -814,7 +827,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
 
               {/* Status Box */}
-              <div className="bg-white p-4.5 rounded-2xl border border-ivory-200 shadow-sm text-left text-xs space-y-2.5">
+              <div className="bg-white p-5 rounded-2xl border border-ivory-200 shadow-sm text-left text-xs space-y-2.5">
                 <div className="flex justify-between">
                   <span className="text-charcoal-muted">Initial Status:</span>
                   <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold uppercase text-[10px]">

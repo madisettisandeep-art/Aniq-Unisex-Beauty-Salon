@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { AniqLogo } from '../brand/AniqLogo';
-import { Calendar, MessageSquare, Phone, Menu, X, Search, ShieldCheck } from 'lucide-react';
+import { Calendar, MessageSquare, Menu, X } from 'lucide-react';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
 
 interface NavbarProps {
@@ -12,23 +12,35 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenLookup }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isPastHero, setIsPastHero] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      const heroEl = document.getElementById('hero-scroll-container');
+      if (heroEl) {
+        const rect = heroEl.getBoundingClientRect();
+        // Stay transparent across all 11 parts of the Hero video until the hero finishes scrolling
+        setIsPastHero(rect.bottom <= 84);
+      } else {
+        setIsPastHero(true);
+      }
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    handleScroll();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   const navLinks = [
     { label: 'Home', href: '#hero-scroll-container' },
-    { label: 'Services & Pricing', href: '#services' },
-    { label: 'Our Masters', href: '#masters' },
-    { label: 'Studio Gallery', href: '#gallery' },
-    { label: 'About ANIQ', href: '#about' },
+    { label: 'Services', href: '#services' },
+    { label: 'Masters', href: '#masters' },
+    { label: 'Gallery', href: '#gallery' },
+    { label: 'About', href: '#about' },
     { label: 'Reviews', href: '#reviews' },
     { label: 'Contact', href: '#contact' },
     { label: 'FAQ', href: '#faq' },
@@ -36,30 +48,32 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenLookup }) =
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-cream-100/90 backdrop-blur-md shadow-card border-b border-ivory-200 py-2.5'
-          : 'bg-gradient-to-b from-charcoal/80 via-charcoal/40 to-transparent py-4'
+      className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-500 ${
+        isPastHero
+          ? 'bg-cream-50/95 backdrop-blur-md shadow-card border-b border-ivory-200'
+          : 'bg-gradient-to-b from-black/50 via-black/20 to-transparent border-b border-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
+        {/* Brand Logo (Left) */}
+        <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
           <AniqLogo
-            variant={isScrolled ? 'gold' : 'gold'}
-            className="h-10 sm:h-12 transition-transform duration-300 group-hover:scale-105"
+            variant="gold"
+            className="h-11 sm:h-12 transition-transform duration-300 group-hover:scale-105"
             showTagline={true}
           />
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden lg:flex items-center space-x-7">
+        {/* Desktop Navigation Links (Center) */}
+        <nav aria-label="Main Navigation" className="hidden lg:flex items-center justify-center gap-5 xl:gap-7">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className={`text-xs uppercase tracking-widest font-medium transition-colors hover:text-gold ${
-                isScrolled ? 'text-charcoal' : 'text-cream-100 hover:text-white'
+              className={`relative py-1 text-xs uppercase tracking-widest font-semibold whitespace-nowrap transition-colors duration-200 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1.5px] after:bg-gold after:transition-all after:duration-300 hover:after:w-full ${
+                isPastHero
+                  ? 'text-charcoal hover:text-gold-dark'
+                  : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] hover:text-gold'
               }`}
             >
               {link.label}
@@ -67,29 +81,34 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenLookup }) =
           ))}
         </nav>
 
-        {/* Action Buttons */}
-        <div className="hidden sm:flex items-center space-x-3">
+        {/* Action Buttons (Right) */}
+        <div className="hidden sm:flex items-center gap-2.5 xl:gap-3 flex-shrink-0">
           {/* Lookup Booking */}
           {onOpenLookup && (
             <button
               onClick={onOpenLookup}
-              className={`text-xs px-3 py-2 rounded-full border transition-all ${
-                isScrolled
-                  ? 'border-beige text-charcoal hover:border-gold hover:text-gold'
-                  : 'border-white/20 text-cream-100 hover:border-gold/60 hover:text-white'
+              className={`whitespace-nowrap text-xs font-medium px-4 py-2 rounded-full border transition-all ${
+                isPastHero
+                  ? 'border-beige text-charcoal hover:border-gold hover:text-gold-dark bg-white/80'
+                  : 'border-white/35 text-white hover:border-gold hover:text-gold bg-black/25 backdrop-blur-sm'
               }`}
             >
               My Booking
             </button>
           )}
 
-          {/* Direct WhatsApp Call/Chat */}
+          {/* Direct WhatsApp Chat */}
           <a
             href={buildWhatsAppUrl("Hello ANIQ Salon, I would like to enquire about appointments.")}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat on WhatsApp"
-            className="p-2 rounded-full bg-emerald-600/15 text-emerald-600 hover:bg-emerald-600 hover:text-white transition-all border border-emerald-600/30"
+            title="Chat on WhatsApp"
+            className={`w-9 h-9 rounded-full transition-all border flex items-center justify-center flex-shrink-0 ${
+              isPastHero
+                ? 'bg-emerald-600/15 text-emerald-600 hover:bg-emerald-600 hover:text-white border-emerald-500/30'
+                : 'bg-emerald-500/25 text-emerald-400 hover:bg-emerald-600 hover:text-white border-emerald-400/40 backdrop-blur-sm'
+            }`}
           >
             <MessageSquare className="w-4 h-4" />
           </a>
@@ -97,26 +116,26 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenLookup }) =
           {/* Book Appointment CTA */}
           <button
             onClick={onOpenBooking}
-            className="inline-flex items-center gap-1.5 px-4.5 py-2 rounded-full bg-gradient-to-r from-gold via-gold-champagne to-gold-hover text-charcoal text-xs font-semibold tracking-wider uppercase shadow-gold hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0"
+            className="whitespace-nowrap inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-gold via-gold-champagne to-gold-hover text-charcoal text-xs font-bold tracking-wider uppercase shadow-gold hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex-shrink-0"
           >
-            <Calendar className="w-3.5 h-3.5" />
-            Book Now
+            <Calendar className="w-3.5 h-3.5 flex-shrink-0" />
+            <span>Book Now</span>
           </button>
         </div>
 
-        {/* Mobile Hamburger Button */}
-        <div className="flex sm:hidden items-center space-x-2">
+        {/* Mobile Controls */}
+        <div className="flex sm:hidden items-center gap-2 flex-shrink-0">
           <button
             onClick={onOpenBooking}
-            className="px-3 py-1.5 rounded-full bg-gold text-charcoal text-[11px] font-bold uppercase tracking-wider"
+            className="whitespace-nowrap px-3.5 py-2 rounded-full bg-gold text-charcoal text-[11px] font-bold uppercase tracking-wider shadow-sm"
           >
-            Book
+            Book Now
           </button>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle navigation menu"
-            className={`p-2 rounded-lg ${
-              isScrolled ? 'text-charcoal' : 'text-white'
+            className={`p-2 rounded-lg transition-colors ${
+              isPastHero ? 'text-charcoal hover:bg-ivory-100' : 'text-white hover:bg-white/10'
             }`}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -124,16 +143,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenLookup }) =
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile & Tablet Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="sm:hidden bg-cream-50/98 backdrop-blur-xl border-b border-beige px-6 pt-4 pb-6 shadow-xl animate-fadeIn">
-          <nav className="flex flex-col space-y-3.5">
+        <div className="lg:hidden bg-cream-50/98 backdrop-blur-xl border-b border-beige px-6 pt-4 pb-6 shadow-xl animate-fadeIn">
+          <nav className="flex flex-col space-y-3">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-charcoal hover:text-gold uppercase tracking-wider py-1 border-b border-ivory-200"
+                className="text-sm font-semibold text-charcoal hover:text-gold uppercase tracking-wider py-1.5 border-b border-ivory-200"
               >
                 {link.label}
               </a>
@@ -146,7 +165,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenLookup }) =
                     setMobileMenuOpen(false);
                     onOpenLookup();
                   }}
-                  className="w-full py-2.5 rounded-xl border border-beige text-charcoal text-xs font-semibold tracking-wider uppercase text-center"
+                  className="w-full py-2.5 rounded-xl border border-beige bg-white text-charcoal text-xs font-semibold tracking-wider uppercase text-center"
                 >
                   Track Existing Booking
                 </button>
@@ -178,4 +197,3 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenLookup }) =
     </header>
   );
 };
-

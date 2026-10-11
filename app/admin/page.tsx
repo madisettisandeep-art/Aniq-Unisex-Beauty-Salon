@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import { AniqLogo } from '@/components/brand/AniqLogo';
+import { useDebounce } from '@/lib/hooks/useDebounce';
 import { Appointment, BookingStatus, SalonMaster, SalonService, SalonSettings } from '@/lib/types/booking';
 import { 
   Calendar, 
@@ -146,25 +147,52 @@ export default function AdminPage() {
     }
   };
 
-  // Stats
-  const todayStr = new Date().toISOString().split('T')[0];
-  const todayCount = appointments.filter(a => a.appointmentDate === todayStr).length;
-  const pendingCount = appointments.filter(a => a.status === 'PENDING_CONFIRMATION').length;
-  const confirmedCount = appointments.filter(a => a.status === 'CONFIRMED').length;
-  const completedCount = appointments.filter(a => a.status === 'COMPLETED').length;
-  const totalRevenue = appointments
-    .filter(a => a.status === 'CONFIRMED' || a.status === 'COMPLETED')
-    .reduce((sum, a) => sum + a.totalPrice, 0);
+  const debouncedSearch = useDebounce(searchQuery, 250);
 
-  // Filtered Appointments
-  const filteredAppointments = appointments.filter(a => {
-    const matchesSearch = 
-      a.bookingReference.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      a.customerName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      a.customerPhone.includes(searchQuery);
-    const matchesStatus = statusFilter === 'ALL' || a.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
+  // Compute all dashboard metrics in a single O(N) memoized pass
+  const { todayCount, pendingCount, confirmedCount, completedCount, totalRevenue } = useMemo(() => {
+    const todayStr = new Date().toISOString().split('T')[0];
+    let today = 0;
+    let pending = 0;
+    let confirmed = 0;
+    let completed = 0;
+    let revenue = 0;
+
+    for (const a of appointments) {
+      if (a.appointmentDate === todayStr) today++;
+      if (a.status === 'PENDING_CONFIRMATION') pending++;
+      if (a.status === 'CONFIRMED') {
+        confirmed++;
+        revenue += a.totalPrice;
+      } else if (a.status === 'COMPLETED') {
+        completed++;
+        revenue += a.totalPrice;
+      }
+    }
+
+    return {
+      todayCount: today,
+      pendingCount: pending,
+      confirmedCount: confirmed,
+      completedCount: completed,
+      totalRevenue: revenue,
+    };
+  }, [appointments]);
+
+  // Memoized & Debounced Filtered Appointments
+  const filteredAppointments = useMemo(() => {
+    const q = debouncedSearch.trim().toLowerCase();
+    return appointments.filter(a => {
+      const matchesStatus = statusFilter === 'ALL' || a.status === statusFilter;
+      if (!matchesStatus) return false;
+      if (!q) return true;
+      return (
+        a.bookingReference.toLowerCase().includes(q) ||
+        a.customerName.toLowerCase().includes(q) ||
+        a.customerPhone.includes(q)
+      );
+    });
+  }, [appointments, debouncedSearch, statusFilter]);
 
   // --- LOGIN SCREEN ---
   if (!isAuthenticated) {
