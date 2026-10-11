@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="256" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1D1318" />
+      <stop offset="50%" stop-color="#110B0E" />
+      <stop offset="100%" stop-color="#26181F" />
+    </linearGradient>
+    <linearGradient id="goldFav" x1="24" y1="24" x2="232" y2="232" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FFF2BA" />
+      <stop offset="35%" stop-color="#E6C65A" />
+      <stop offset="70%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#F6E08E" />
+    </linearGradient>
+  </defs>
+
+  <!-- Luxury Circular Badge with Gold Border -->
+  <circle cx="128" cy="128" r="122" fill="url(#bgGrad)" stroke="url(#goldFav)" stroke-width="8" />
+  <circle cx="128" cy="128" r="110" fill="none" stroke="url(#goldFav)" stroke-width="1.5" stroke-opacity="0.35" />
+
+  <!-- Centered ANIQ Logo Emblem & Wordmark -->
+  <g transform="translate(8, 68) scale(1.0)">
+    <!-- Scissors Emblem Integrated into 'A' -->
+    <g stroke="url(#goldFav)" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M29 8 C33 9, 35 11, 36 13" stroke-width="3.6" />
+      <circle cx="38" cy="20" r="8.5" fill="none" />
+      <circle cx="62" cy="20" r="8.5" fill="none" />
+      <circle cx="50" cy="37" r="3.4" fill="#FFF2BA" stroke="none" />
+      <path d="M42 26 L50 37 L68 74" stroke-width="5.5" />
+      <path d="M58 26 L50 37 L32 74" stroke-width="5.5" />
+      <path d="M26 74 H38" stroke-width="4" />
+      <path d="M62 74 H74" stroke-width="4" />
+    </g>
+
+    <!-- 'A' Crossbar -->
+    <rect x="36" y="53" width="34" height="4.8" rx="2.4" fill="url(#goldFav)" />
+
+    <!-- Letter 'n' -->
+    <path
+      d="M84 43 V74 M84 51 C89 41, 107 41, 112 51 V74"
+      stroke="url(#goldFav)"
+      stroke-width="6.8"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <!-- Letter 'i' (Tittle Dot + Solid Stem + Serifs) -->
+    <circle cx="132" cy="31.5" r="5" fill="url(#goldFav)" />
+    <rect x="128.6" y="42" width="6.8" height="33" rx="3.4" fill="url(#goldFav)" />
+    <rect x="124.5" y="42" width="15" height="3.6" rx="1.8" fill="url(#goldFav)" />
+    <rect x="124.5" y="71.4" width="15" height="3.6" rx="1.8" fill="url(#goldFav)" />
+
+    <!-- Letter 'Q' with Flourish -->
+    <ellipse cx="164" cy="57.5" rx="14.5" ry="17" stroke="url(#goldFav)" stroke-width="6.5" />
+    <path
+      d="M178.5 43 V75 C178.5 89, 207 89, 224 76"
+      stroke="url(#goldFav)"
+      stroke-width="6.5"
+      stroke-linecap="round"
+    />
+
+    <!-- Sub-caption -->
+    <text
+      x="122"
+      y="108"
+      fill="#F5DF8B"
+      font-size="13"
+      font-family="Georgia, serif"
+      letter-spacing="4.5"
+      text-anchor="middle"
+      font-weight="bold"
+    >
+      LUXURY SALON
+    </text>
+  </g>
+</svg>
+
