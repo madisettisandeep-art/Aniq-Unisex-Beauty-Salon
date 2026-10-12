@@ -158,130 +158,119 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({ onOpenBooking }) =
                   />
                 )}
 
-                {/* Lighter Atmospheric Overlay so video is crystal clear through the transparent navbar */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/30 pointer-events-none" />
-                <div className="absolute inset-0 bg-gold/5 mix-blend-screen pointer-events-none" />
+                {/* Ultra-subtle edge-only vignette so the center of the video is 100% crystal clear */}
+                <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/45 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/70 via-black/25 to-transparent pointer-events-none" />
               </div>
             );
           })}
         </div>
 
-        {/* --- CENTER / HERO CONTENT OVERLAY --- */}
-        <div className="relative z-20 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center my-auto py-6">
-          {/* Location & Chapter Badge */}
-          <div className="inline-flex flex-wrap items-center justify-center gap-2 mb-5 px-4 py-1.5 rounded-full bg-black/50 border border-gold/45 backdrop-blur-md text-gold text-xs font-mono uppercase tracking-widest shadow-lg">
-            <span className="inline-flex items-center gap-1.5 font-sans font-semibold text-gold-champagne">
-              <Sparkles className="w-3.5 h-3.5 text-gold animate-pulse" />
-              West Marredpally, Secunderabad
-            </span>
-            <span className="text-white/30">•</span>
-            <span>Scene {activeScene.part} of {VIDEO_MANIFEST.length}</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-gold animate-ping" />
-            <span className="text-cream-100">{activeScene.category}</span>
-          </div>
+        {/* --- OPEN VIEWPORT CANVAS (No center text blocking the 11-part film) --- */}
+        <div className="flex-1 pointer-events-none" />
 
-          {/* Heading */}
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.65)] mb-3 transition-all duration-500">
-            {activeScene.title}
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-base sm:text-lg md:text-xl text-gold-champagne font-light max-w-2xl mx-auto drop-shadow-[0_2px_8px_rgba(0,0,0,0.65)] mb-2">
-            {activeScene.subtitle}
-          </p>
-
-          <p className="text-xs sm:text-sm text-cream-100/95 max-w-xl mx-auto hidden sm:block mb-8 leading-relaxed drop-shadow-[0_1px_4px_rgba(0,0,0,0.7)]">
-            {activeScene.description}
-          </p>
-
-          {/* Call to Actions */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
-            <button
-              onClick={onOpenBooking}
-              className="whitespace-nowrap inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-gold to-gold-hover text-charcoal font-bold text-xs sm:text-sm uppercase tracking-wider shadow-gold hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0"
-            >
-              <Calendar className="w-4 h-4" />
-              Book Appointment
-            </button>
-
-            <a
-              href={buildWhatsAppUrl("Hello ANIQ Salon, I would like to book an appointment at your West Marredpally studio.")}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="whitespace-nowrap inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-black/50 hover:bg-black/75 text-white font-semibold text-xs sm:text-sm uppercase tracking-wider border border-white/35 backdrop-blur-md transition-all"
-            >
-              <MessageSquare className="w-4 h-4 text-emerald-400" />
-              WhatsApp Booking
-            </a>
-          </div>
-        </div>
-
-        {/* --- BOTTOM SCROLL PROGRESS & PLAYBACK DOCK --- */}
-        {/* Constrained width and right margin clearance so it never overlaps the bottom-right WhatsApp pill */}
-        <div className="relative z-20 w-full max-w-5xl mx-auto px-4 sm:px-6 pb-5 sm:pr-56">
-          <div className="bg-charcoal/80 border border-white/15 backdrop-blur-xl rounded-2xl px-4 py-3.5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-2xl">
-            {/* Left: Scene Thumbnail & Title Preview */}
-            <div className="flex items-center gap-3 w-full md:w-auto min-w-0">
-              <div className="w-10 h-10 rounded-lg overflow-hidden border border-gold/40 flex-shrink-0 relative">
-                <img
-                  src={activeScene.posterSrc}
-                  alt={activeScene.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="text-left min-w-0 flex-1">
-                <div className="text-[10px] font-mono uppercase tracking-wider text-gold truncate">
-                  Part {activeScene.part} • {activeScene.sceneName}
+        {/* --- UNIFIED COMPACT BOTTOM LOWER-THIRD CINEMA HUD --- */}
+        {/* Anchored at the very bottom edge with right clearance for the WhatsApp pill so the video center is 100% clear */}
+        <div className="relative z-20 w-full max-w-6xl mx-auto px-4 sm:px-6 pb-4 sm:pr-56">
+          <div className="bg-black/45 hover:bg-black/60 transition-colors duration-300 border border-gold/30 backdrop-blur-md rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3 shadow-2xl">
+            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 lg:gap-5">
+              {/* Left: Scene Thumbnail + Chapter Badge + Scene Title & Subtitle */}
+              <div className="flex items-center gap-3 min-w-0 flex-1">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl overflow-hidden border border-gold/50 flex-shrink-0 hidden sm:block shadow-md">
+                  <img
+                    src={activeScene.posterSrc}
+                    alt={activeScene.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="text-xs text-white font-medium truncate">
-                  {activeScene.title}
+
+                <div className="min-w-0 flex-1 text-left">
+                  <div className="flex flex-wrap items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest text-gold-champagne mb-0.5">
+                    <Sparkles className="w-3 h-3 text-gold flex-shrink-0" />
+                    <span className="font-semibold text-gold">
+                      Scene {activeScene.part}/11
+                    </span>
+                    <span className="text-white/40">•</span>
+                    <span className="text-cream-100 font-semibold">{activeScene.category}</span>
+                    <span className="text-white/40 hidden md:inline">•</span>
+                    <span className="text-cream-200/80 hidden md:inline truncate">
+                      West Marredpally, Secunderabad
+                    </span>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2.5 min-w-0">
+                    <h1 className="text-base sm:text-xl md:text-2xl font-serif font-bold text-white tracking-tight truncate drop-shadow">
+                      {activeScene.title}
+                    </h1>
+                    <p className="text-[11px] sm:text-xs text-cream-100/85 font-light truncate hidden sm:block">
+                      — {activeScene.description}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Center: Continuous Gold Scroll Progress Line */}
-            <div className="flex-1 w-full max-w-sm mx-auto hidden sm:flex flex-col gap-1.5 px-2">
-              <div className="flex justify-between text-[10px] text-cream-200/75 font-mono">
-                <span>01 Exterior</span>
-                <span className="text-gold font-semibold">{Math.round(scrollProgress * 100)}% Scroll</span>
-                <span>11 Finale</span>
+              {/* Center: Compact Gold Scroll Progress Bar */}
+              <div className="w-full lg:w-44 xl:w-52 hidden md:flex flex-col gap-1 flex-shrink-0">
+                <div className="flex justify-between text-[9px] text-cream-200/85 font-mono uppercase tracking-wider">
+                  <span>01 Exterior</span>
+                  <span className="text-gold font-bold">{Math.round(scrollProgress * 100)}%</span>
+                  <span>11 Finale</span>
+                </div>
+                <div className="w-full h-1.5 bg-white/15 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-gold-light via-gold to-rosegold rounded-full transition-all duration-150 ease-out"
+                    style={{ width: `${Math.max(scrollProgress * 100, 5)}%` }}
+                  />
+                </div>
               </div>
-              <div className="w-full h-1.5 bg-white/15 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-gold-light via-gold to-rosegold rounded-full transition-all duration-150 ease-out"
-                  style={{ width: `${Math.max(scrollProgress * 100, 5)}%` }}
-                />
+
+              {/* Right: Compact Action Buttons & Audio/Skip Controls */}
+              <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 flex-shrink-0">
+                <button
+                  onClick={onOpenBooking}
+                  className="whitespace-nowrap inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-gradient-to-r from-gold to-gold-hover text-charcoal font-bold text-[11px] uppercase tracking-wider shadow-gold hover:brightness-105 transition-all"
+                >
+                  <Calendar className="w-3.5 h-3.5" />
+                  <span>Book Appointment</span>
+                </button>
+
+                <a
+                  href={buildWhatsAppUrl("Hello ANIQ Salon, I would like to book an appointment at your West Marredpally studio.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="whitespace-nowrap hidden xl:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-semibold text-[11px] uppercase tracking-wider border border-white/25 transition-all"
+                >
+                  <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>WhatsApp</span>
+                </a>
+
+                <button
+                  onClick={() => setIsMuted(!isMuted)}
+                  aria-label={isMuted ? 'Unmute video audio' : 'Mute video audio'}
+                  title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
+                  className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-cream-100 border border-white/20 text-[11px] font-medium transition-all hover:border-gold/60"
+                >
+                  {isMuted ? (
+                    <>
+                      <VolumeX className="w-3.5 h-3.5 text-cream-200" />
+                      <span className="hidden sm:inline">Muted</span>
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="w-3.5 h-3.5 text-gold" />
+                      <span className="hidden sm:inline text-gold">Sound</span>
+                    </>
+                  )}
+                </button>
+
+                <button
+                  onClick={handleSkipToContent}
+                  className="whitespace-nowrap inline-flex items-center gap-1 px-3 py-1.5 text-[11px] font-semibold tracking-wider uppercase text-cream-100 hover:text-gold bg-white/10 hover:bg-white/20 border border-white/20 rounded-full transition-all"
+                >
+                  <span>Skip</span>
+                  <ChevronDown className="w-3.5 h-3.5 text-gold" />
+                </button>
               </div>
-            </div>
-
-            {/* Right: Audio Toggle & Skip Intro Controls */}
-            <div className="flex items-center justify-end gap-2.5 flex-shrink-0 w-full md:w-auto border-t md:border-t-0 border-white/10 pt-2.5 md:pt-0">
-              <button
-                onClick={() => setIsMuted(!isMuted)}
-                aria-label={isMuted ? 'Unmute video audio' : 'Mute video audio'}
-                title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-cream-100 border border-white/15 text-[11px] font-medium transition-all hover:border-gold/60"
-              >
-                {isMuted ? (
-                  <>
-                    <VolumeX className="w-3.5 h-3.5 text-cream-200" />
-                    <span className="hidden lg:inline">Muted</span>
-                  </>
-                ) : (
-                  <>
-                    <Volume2 className="w-3.5 h-3.5 text-gold" />
-                    <span className="hidden lg:inline text-gold">Sound On</span>
-                  </>
-                )}
-              </button>
-
-              <button
-                onClick={handleSkipToContent}
-                className="whitespace-nowrap inline-flex items-center gap-1 px-3.5 py-1.5 text-[11px] font-semibold tracking-wider uppercase text-cream-100 hover:text-gold bg-white/10 hover:bg-white/20 border border-white/15 rounded-full transition-all"
-              >
-                <span>Skip Intro</span>
-                <ChevronDown className="w-3.5 h-3.5 text-gold" />
-              </button>
             </div>
           </div>
         </div>
