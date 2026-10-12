@@ -13,11 +13,13 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({ onOpenBooking }) =
   const [activeSceneIndex, setActiveSceneIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMuted, setIsMuted] = useState(true);
+  const [isHeroInView, setIsHeroInView] = useState(true);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Video element refs for preloading and smooth crossfades
+  // Video element refs for preloading and strict single-scene audio control
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const prevSceneIndexRef = useRef<number>(0);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -42,6 +44,10 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({ onOpenBooking }) =
       const rect = containerRef.current.getBoundingClientRect();
       const containerHeight = containerRef.current.offsetHeight;
       const windowHeight = window.innerHeight;
+
+      // Check whether the hero section is still visible in the viewport
+      const inView = rect.bottom > 120 && rect.top < windowHeight;
+      setIsHeroInView((prev) => (prev === inView ? prev : inView));
 
       const scrollableDistance = containerHeight - windowHeight;
       if (scrollableDistance <= 0) return;
@@ -71,14 +77,20 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({ onOpenBooking }) =
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Pause playback when tab is hidden
+  // Pause and silence all playback when browser tab is hidden
   useEffect(() => {
     const handleVisibility = () => {
       if (document.hidden) {
-        videoRefs.current.forEach(v => v?.pause());
-      } else {
+        videoRefs.current.forEach((v) => {
+          if (!v) return;
+          v.muted = true;
+          v.pause();
+        });
+      } else if (isHeroInView) {
         const currentVideo = videoRefs.current[activeSceneIndex];
         if (currentVideo) {
+          currentVideo.muted = isMuted;
+          currentVideo.volume = isMuted ? 0 : 1;
           currentVideo.play().catch(() => {});
         }
       }
@@ -86,20 +98,35 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({ onOpenBooking }) =
 
     document.addEventListener('visibilitychange', handleVisibility);
     return () => document.removeEventListener('visibilitychange', handleVisibility);
-  }, [activeSceneIndex]);
+  }, [activeSceneIndex, isMuted, isHeroInView]);
 
-  // Manage video play/pause sync across scenes
+  // Strict single-slide video & audio synchronization:
+  // Only the activeSceneIndex (when hero is in view) can play or produce sound.
+  // Every other slide is immediately paused, muted, and rewound.
   useEffect(() => {
+    const sceneChanged = prevSceneIndexRef.current !== activeSceneIndex;
+    prevSceneIndexRef.current = activeSceneIndex;
+
     videoRefs.current.forEach((video, idx) => {
       if (!video) return;
-      if (idx === activeSceneIndex) {
-        video.currentTime = 0;
+
+      if (idx === activeSceneIndex && isHeroInView && !document.hidden) {
+        video.muted = isMuted;
+        video.volume = isMuted ? 0 : 1;
+        if (sceneChanged) {
+          video.currentTime = 0;
+        }
         video.play().catch(() => {});
-      } else if (Math.abs(idx - activeSceneIndex) > 1) {
-        video.pause();
+      } else {
+        video.muted = true;
+        video.volume = 0;
+        if (!video.paused) {
+          video.pause();
+        }
+        video.currentTime = 0;
       }
     });
-  }, [activeSceneIndex]);
+  }, [activeSceneIndex, isMuted, isHeroInView]);
 
   const activeScene: VideoScene = VIDEO_MANIFEST[activeSceneIndex] || VIDEO_MANIFEST[0];
 
@@ -142,15 +169,22 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({ onOpenBooking }) =
                   loading={idx === 0 ? 'eager' : 'lazy'}
                 />
 
-                {/* Video Tag (scaled to crop out bottom-right Google Flow watermark across all 11 clips) */}
+                {/* Video Tag (strictly muted & paused unless this exact slide is active) */}
                 {!prefersReducedMotion && shouldLoad && (
                   <video
-                    ref={(el) => { videoRefs.current[idx] = el; }}
+                    ref={(el) => {
+                      videoRefs.current[idx] = el;
+                      if (el && (idx !== activeSceneIndex || !isHeroInView)) {
+                        el.muted = true;
+                        el.volume = 0;
+                        if (!el.paused) el.pause();
+                      }
+                    }}
                     src={scene.videoSrc}
                     poster={scene.posterSrc}
-                    autoPlay={isActive}
+                    autoPlay={isActive && isHeroInView}
                     loop
-                    muted={isMuted}
+                    muted={isMuted || !isActive || !isHeroInView}
                     playsInline
                     preload={idx === 0 ? 'auto' : 'metadata'}
                     className="absolute inset-0 w-full h-full object-cover scale-[1.16] origin-[35%_20%]"
