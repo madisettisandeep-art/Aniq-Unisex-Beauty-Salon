@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import {
-  Sparkles,
+  Crown,
   ChevronLeft,
   ChevronRight,
   Scissors,
@@ -153,7 +153,7 @@ export const SignatureCarousel: React.FC<SignatureCarouselProps> = ({
         <div className="animate-marquee flex items-center">
           {[...MARQUEE_ITEMS, ...MARQUEE_ITEMS].map((item, idx) => (
             <div key={idx} className="flex items-center mx-6 whitespace-nowrap">
-              <Sparkles className="w-3.5 h-3.5 text-gold mr-3 flex-shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-gold mr-3 flex-shrink-0" />
               <span className="text-xs font-serif font-bold tracking-[0.22em] text-gold-light uppercase">
                 {item}
               </span>
@@ -308,7 +308,7 @@ export const SignatureCarousel: React.FC<SignatureCarouselProps> = ({
             <div className="relative overflow-hidden rounded-3xl p-7 bg-gradient-to-br from-[#FDF0F2] via-white to-[#F7DCE0] border border-rosegold/40 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1.5 h-full">
               <div className="absolute -right-8 -top-8 w-28 h-28 rounded-full bg-rosegold/20 blur-xl" />
               <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-rosegold to-[#8C4652] text-white flex items-center justify-center mb-5 shadow-md">
-                <Sparkles className="w-6 h-6" />
+                <Crown className="w-6 h-6" />
               </div>
               <h3 className="text-xl font-serif font-bold text-charcoal mb-2">
                 Luxury Skin & Hydra Facials

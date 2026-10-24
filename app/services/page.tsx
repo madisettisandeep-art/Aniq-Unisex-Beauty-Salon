@@ -10,7 +10,7 @@ import { BookingModal } from '@/components/booking/BookingModal';
 import { BookingLookupModal } from '@/components/booking/BookingLookupModal';
 import { SalonService } from '@/lib/types/booking';
 import { SERVICE_CATALOG } from '@/lib/data/service-catalog';
-import { ArrowLeft, Sparkles } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 export default function ServicesPage() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);

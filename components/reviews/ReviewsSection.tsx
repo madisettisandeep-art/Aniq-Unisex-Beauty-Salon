@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { VERIFIED_REVIEWS, SALON_STATS } from '@/lib/data/reviews';
-import { Star, ShieldCheck, Sparkles, ExternalLink, Quote } from 'lucide-react';
+import { Star, ShieldCheck, ExternalLink, Quote } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 const CARD_ACCENTS = [
@@ -26,7 +26,6 @@ export const ReviewsSection: React.FC = () => {
         {/* Header */}
         <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-16">
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-gradient-to-r from-gold/25 to-rosegold/25 text-[#7A444E] border border-rosegold/40 mb-3 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-rosegold" />
             Verified Google Reviews
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#22171C] tracking-tight mb-4">

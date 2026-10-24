@@ -16,7 +16,7 @@ export const SERVICE_CATEGORIES: ServiceCategory[] = [
   {
     id: 'facials',
     name: 'Luxury Facials',
-    iconName: 'Sparkles',
+    iconName: 'Crown',
     description: 'Gold, Diamond, O3 and Special Hydra facial rejuvenation therapies.'
   },
   {

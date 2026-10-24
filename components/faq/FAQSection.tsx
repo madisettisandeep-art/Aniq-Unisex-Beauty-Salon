@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, Sparkles, HelpCircle } from 'lucide-react';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 interface FAQItem {
@@ -57,7 +57,6 @@ export const FAQSection: React.FC = () => {
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <ScrollReveal direction="up" className="text-center max-w-2xl mx-auto mb-16">
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-gradient-to-r from-gold/25 to-rosegold/25 text-[#7A444E] border border-rosegold/40 mb-3 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-rosegold" />
             Clear Guidance
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#22171C] tracking-tight mb-4">

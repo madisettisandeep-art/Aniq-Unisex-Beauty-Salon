@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, Shield, Heart, Award, CheckCircle2 } from 'lucide-react';
+import { Shield, Heart, Award, CheckCircle2 } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 export const AboutSection: React.FC = () => {
@@ -56,7 +56,6 @@ export const AboutSection: React.FC = () => {
           {/* Narrative Content (Slides in from Right) */}
           <ScrollReveal direction="right" className="space-y-6">
             <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-gradient-to-r from-gold/25 to-rosegold/25 text-[#7A444E] border border-rosegold/40 shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-rosegold" />
               The ANIQ Philosophy
             </span>
 

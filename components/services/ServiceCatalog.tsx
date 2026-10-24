@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect, memo } from 'react';
 import { SalonService } from '@/lib/types/booking';
 import { SERVICE_CATEGORIES } from '@/lib/data/service-catalog';
-import { Clock, Search, Sparkles, MessageSquare, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Clock, Search, MessageSquare, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { buildWhatsAppUrl } from '@/lib/whatsapp';
 import { useDebounce } from '@/lib/hooks/useDebounce';
 import { ServiceGridSkeleton } from '@/components/ui/Skeletons';
@@ -113,8 +113,7 @@ const ServiceCard = memo<ServiceCardProps>(({ service, categoryName, onSelectSer
               {categoryName}
             </span>
             {service.isPopular && (
-              <span className="bg-gradient-to-r from-[#D4AF37] to-[#B76E79] text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
-                <Sparkles className="w-2.5 h-2.5 text-white" />
+              <span className="bg-gradient-to-r from-[#D4AF37] to-[#B76E79] text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm flex items-center">
                 Popular
               </span>
             )}
@@ -259,7 +258,6 @@ export const ServiceCatalog: React.FC<ServiceCatalogProps> = ({
         {/* Header */}
         <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-14">
           <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-gradient-to-r from-gold/25 to-rosegold/25 text-[#7A444E] border border-rosegold/40 mb-3 shadow-sm">
-            <Sparkles className="w-3.5 h-3.5 text-rosegold" />
             Curated Service Menu & Verified Pricing
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#22171C] tracking-tight mb-4">

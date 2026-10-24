@@ -2,7 +2,7 @@
 
 import React, { memo } from 'react';
 import { SalonMaster } from '@/lib/types/booking';
-import { Sparkles, Calendar, Star, Clock, Award } from 'lucide-react';
+import { Calendar, Star, Clock, Award } from 'lucide-react';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 
 interface MasterCardProps {
@@ -120,7 +120,6 @@ export const MastersSection: React.FC<MastersSectionProps> = memo(
           {/* Section Header */}
           <ScrollReveal direction="up" className="text-center max-w-3xl mx-auto mb-16">
             <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase bg-gold/15 text-gold-light border border-gold/40 mb-3">
-              <Sparkles className="w-3.5 h-3.5 text-gold" />
               Artisans of Beauty & Grooming
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight mb-4">
