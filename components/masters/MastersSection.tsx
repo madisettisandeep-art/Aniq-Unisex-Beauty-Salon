@@ -24,7 +24,7 @@ const MasterCard = memo<MasterCardProps>(({ master, onSelectMaster, index }) => 
           <div className="relative h-64 w-full overflow-hidden bg-[#1A1216]">
             <img
               src={master.photo}
-              alt={master.name}
+              alt={`${master.name} - Master Stylist at ANIQ Unisex Salon West Marredpally`}
               width={320}
               height={256}
               loading="lazy"

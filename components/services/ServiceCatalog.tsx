@@ -126,7 +126,7 @@ const ServiceCard = memo<ServiceCardProps>(({ service, categoryName, onSelectSer
                 <div className="w-14 h-14 rounded-2xl overflow-hidden bg-ivory-100 border-2 border-gold/40 shadow-sm flex-shrink-0">
                   <img
                     src={service.image}
-                    alt={service.name}
+                    alt={`${service.name} service at ANIQ Unisex Salon West Marredpally`}
                     width={56}
                     height={56}
                     loading="lazy"

@@ -21,7 +21,7 @@ export const AboutSection: React.FC = () => {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-gold/40 aspect-[4/3] bg-ivory-100 group">
               <img
                 src="/images/high_res/reel_07_salon_interior.jpg"
-                alt="ANIQ Unisex Salon Interior"
+                alt="ANIQ Unisex Beauty Salon and Tattoo luxury interior in West Marredpally, Secunderabad"
                 width={640}
                 height={480}
                 loading="lazy"

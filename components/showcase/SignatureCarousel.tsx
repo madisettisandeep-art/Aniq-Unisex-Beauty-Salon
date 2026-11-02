@@ -234,7 +234,7 @@ export const SignatureCarousel: React.FC<SignatureCarouselProps> = ({
               <div className="relative h-64 w-full overflow-hidden">
                 <img
                   src={slide.image}
-                  alt={slide.title}
+                  alt={`${slide.title} - ANIQ Unisex Beauty Salon West Marredpally`}
                   width={370}
                   height={256}
                   loading="lazy"

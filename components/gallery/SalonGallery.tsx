@@ -162,7 +162,7 @@ export const SalonGallery: React.FC = () => {
             >
               <img
                 src={item.src}
-                alt={item.title}
+                alt={`${item.title} - ANIQ Unisex Salon West Marredpally`}
                 width={224}
                 height={160}
                 loading="lazy"
@@ -222,7 +222,7 @@ export const SalonGallery: React.FC = () => {
                 <div className="relative aspect-[4/4.2] w-full overflow-hidden bg-ivory-100">
                   <img
                     src={item.src}
-                    alt={item.title}
+                    alt={`${item.title} - ANIQ Unisex Salon Styling Portfolio`}
                     width={400}
                     height={420}
                     loading="lazy"

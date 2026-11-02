@@ -27,6 +27,32 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'aniqsalon.com',
+          },
+        ],
+        destination: 'https://www.aniqsalon.com/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'aniqstudio.com',
+          },
+        ],
+        destination: 'https://www.aniqsalon.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
