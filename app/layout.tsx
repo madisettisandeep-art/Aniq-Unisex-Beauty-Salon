@@ -15,9 +15,12 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://aniqstudio.com'),
+  metadataBase: new URL('https://aniqsalon.com'),
   title: 'ANIQ Unisex Beauty Salon and Tattoo | West Marredpally, Secunderabad',
   description: 'West Marredpally’s premier luxury salon. Precision haircuts, restorative hair spas, 24K gold facials, detan treatments, and custom tattoo studio. Book your appointment online.',
+  alternates: {
+    canonical: '/',
+  },
   keywords: [
     'ANIQ Salon West Marredpally',
     'Unisex salon in West Marredpally',
@@ -30,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ANIQ Unisex Beauty Salon and Tattoo — West Marredpally',
     description: 'Luxury grooming, bridal facials, hair spa rituals and custom tattoo consultations in Secunderabad.',
-    url: 'https://aniqstudio.com',
+    url: 'https://aniqsalon.com',
     siteName: 'ANIQ Unisex Luxury Salon',
     images: [
       {
@@ -52,6 +55,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   icons: {
     icon: [
@@ -75,7 +85,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'BeautySalon',
     name: 'ANIQ Unisex Beauty Salon and Tattoo',
-    image: 'https://aniqstudio.com/images/high_res/post_01_hair_care_1080p.jpg',
+    image: 'https://aniqsalon.com/images/high_res/post_01_hair_care_1080p.jpg',
     telephone: '+919912417109',
     priceRange: '₹₹',
     address: {
@@ -112,7 +122,11 @@ export default function RootLayout({
       ratingValue: '4.7',
       reviewCount: '91',
     },
-    url: 'https://aniqstudio.com',
+    url: 'https://aniqsalon.com',
+    hasMenu: 'https://aniqsalon.com/services',
+    sameAs: [
+      'https://www.instagram.com/aniqstudio_westmarredpally/'
+    ],
   };
 
   return (
