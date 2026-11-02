@@ -106,7 +106,12 @@ export const Footer: React.FC = () => {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-[11px] text-cream-200/60 gap-4">
           <p>© {new Date().getFullYear()} ANIQ Unisex Beauty Salon and Tattoo. All rights reserved.</p>
           <div className="flex items-center space-x-6">
-            <Link href="/admin" className="hover:text-gold transition-colors flex items-center gap-1">
+            <Link
+              href="/admin"
+              prefetch={false}
+              rel="nofollow"
+              className="hover:text-gold transition-colors flex items-center gap-1"
+            >
               <ShieldCheck className="w-3.5 h-3.5" />
               Staff / Admin Portal
             </Link>
