@@ -24,8 +24,8 @@ export const Footer: React.FC = () => {
                   <Star key={i} className="w-3.5 h-3.5 fill-gold" />
                 ))}
               </div>
-              <span className="text-xs font-bold text-white">4.7 Stars</span>
-              <span className="text-[10px] text-cream-200/60">(91 Google Reviews)</span>
+              <span className="text-xs font-bold text-white">{SALON_STATS.rating} Stars</span>
+              <span className="text-[10px] text-cream-200/60">({SALON_STATS.totalReviews} Google Reviews)</span>
             </div>
           </div>
 
@@ -68,6 +68,9 @@ export const Footer: React.FC = () => {
               <p className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-gold flex-shrink-0 mt-0.5" />
                 <span>{SALON_STATS.address}</span>
+              </p>
+              <p className="text-[11px] text-gold font-medium pl-6 -mt-1.5">
+                Serving: {SALON_STATS.serviceArea}
               </p>
               <p className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-gold flex-shrink-0" />

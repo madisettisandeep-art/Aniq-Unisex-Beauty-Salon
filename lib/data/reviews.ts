@@ -9,11 +9,13 @@ export interface SalonReview {
 }
 
 export const SALON_STATS = {
+  name: 'Aniq Unisex Beauty Salon and Tattoo',
   rating: 4.7,
-  totalReviews: 91,
-  verifiedGoogleReviewsCount: 91,
+  totalReviews: 88,
+  verifiedGoogleReviewsCount: 88,
   phone: '+91 99124 17109',
-  address: 'W Marredpally Road, Siva Arun Colony, West Marredpally, Secunderabad, Telangana 500026',
+  address: 'W Marredpally Road, Siva Arun Colony, West Marredpally, Secunderabad, Telangana 500026, India',
+  serviceArea: 'West Marredpally, East Marredpally, Secunderabad, Telangana',
   landmark: 'Beside Cafe Victoria / Marredpally Main',
   googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Aniq+Unisex+Beauty+Salon+and+Tattoo+West+Marredpally+Secunderabad',
   instagramUrl: 'https://www.instagram.com/aniqstudio_westmarredpally/'

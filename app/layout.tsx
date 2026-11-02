@@ -16,31 +16,35 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.aniqsalon.com'),
-  title: 'ANIQ Unisex Beauty Salon and Tattoo | West Marredpally, Secunderabad',
-  description: 'West Marredpally’s premier luxury salon. Precision haircuts, restorative hair spas, 24K gold facials, detan treatments, and custom tattoo studio. Book your appointment online.',
+  title: 'Aniq Unisex Beauty Salon and Tattoo | West Marredpally, Secunderabad',
+  description: 'Premier unisex beauty salon & tattoo studio in West Marredpally, Secunderabad. Precision haircuts, bridal facials, restorative hair spa, keratin treatments & custom tattoos. Call +91 99124 17109.',
   alternates: {
     canonical: 'https://www.aniqsalon.com/',
   },
   keywords: [
+    'Aniq Unisex Beauty Salon and Tattoo',
     'ANIQ Salon West Marredpally',
     'Unisex salon in West Marredpally',
     'Haircut and grooming in Secunderabad',
     'Facial and hair spa in West Marredpally',
     'Tattoo studio in Secunderabad',
-    'Luxury salon Hyderabad'
+    'Luxury salon Hyderabad',
+    'Beauty parlour West Marredpally',
+    'Keratin treatment Secunderabad',
+    'Hydra facial Secunderabad'
   ],
-  authors: [{ name: 'ANIQ Unisex Beauty Salon & Tattoo' }],
+  authors: [{ name: 'Aniq Unisex Beauty Salon and Tattoo' }],
   openGraph: {
-    title: 'ANIQ Unisex Beauty Salon and Tattoo — West Marredpally',
-    description: 'Luxury grooming, bridal facials, hair spa rituals and custom tattoo consultations in Secunderabad.',
+    title: 'Aniq Unisex Beauty Salon and Tattoo — West Marredpally, Secunderabad',
+    description: 'Premier unisex grooming, bridal facials, restorative hair spas and custom tattoo consultations in West Marredpally, Secunderabad. Call +91 99124 17109.',
     url: 'https://www.aniqsalon.com/',
-    siteName: 'ANIQ Unisex Luxury Salon',
+    siteName: 'Aniq Unisex Beauty Salon and Tattoo',
     images: [
       {
         url: '/images/high_res/post_01_hair_care_1080p.jpg',
         width: 1080,
         height: 1350,
-        alt: 'ANIQ Unisex Salon West Marredpally',
+        alt: 'Aniq Unisex Beauty Salon and Tattoo in West Marredpally, Secunderabad',
       },
     ],
     locale: 'en_IN',
@@ -48,8 +52,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ANIQ Unisex Beauty Salon & Tattoo | West Marredpally',
-    description: 'Premier grooming, beauty spa, and tattoo sanctuary in Secunderabad.',
+    title: 'Aniq Unisex Beauty Salon and Tattoo | West Marredpally, Secunderabad',
+    description: 'Premier grooming, beauty spa, and tattoo sanctuary in West Marredpally, Secunderabad. Call +91 99124 17109.',
     images: ['/images/high_res/post_01_hair_care_1080p.jpg'],
   },
   robots: {
@@ -83,11 +87,18 @@ export default function RootLayout({
 }) {
   const structuredData = {
     '@context': 'https://schema.org',
-    '@type': 'BeautySalon',
-    name: 'ANIQ Unisex Beauty Salon and Tattoo',
+    '@type': ['BeautySalon', 'LocalBusiness'],
+    '@id': 'https://www.aniqsalon.com/#business',
+    name: 'Aniq Unisex Beauty Salon and Tattoo',
+    alternateName: 'ANIQ Unisex Luxury Salon & Tattoo',
+    description: 'Premier unisex beauty salon & tattoo studio in West Marredpally, Secunderabad. Precision haircuts, restorative hair spas, 24K gold facials, detan treatments, and bespoke body art.',
+    url: 'https://www.aniqsalon.com/',
+    logo: 'https://www.aniqsalon.com/favicon.svg',
     image: 'https://www.aniqsalon.com/images/high_res/post_01_hair_care_1080p.jpg',
-    telephone: '+919912417109',
+    telephone: '+91 99124 17109',
     priceRange: '₹₹',
+    currenciesAccepted: 'INR',
+    paymentAccepted: 'Cash, UPI, Credit Card, Debit Card',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'W Marredpally Road, Siva Arun Colony',
@@ -98,8 +109,8 @@ export default function RootLayout({
     },
     geo: {
       '@type': 'GeoCoordinates',
-      latitude: '17.4447',
-      longitude: '78.5085',
+      latitude: 17.4447,
+      longitude: 78.5085,
     },
     openingHoursSpecification: [
       {
@@ -117,12 +128,25 @@ export default function RootLayout({
         closes: '21:00',
       },
     ],
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.7',
-      reviewCount: '91',
-    },
-    url: 'https://www.aniqsalon.com/',
+    areaServed: [
+      {
+        '@type': 'AdministrativeArea',
+        name: 'West Marredpally',
+      },
+      {
+        '@type': 'AdministrativeArea',
+        name: 'East Marredpally',
+      },
+      {
+        '@type': 'City',
+        name: 'Secunderabad',
+      },
+      {
+        '@type': 'State',
+        name: 'Telangana',
+      },
+    ],
+    hasMap: 'https://www.google.com/maps/search/?api=1&query=Aniq+Unisex+Beauty+Salon+and+Tattoo+West+Marredpally+Secunderabad',
     hasMenu: 'https://www.aniqsalon.com/services',
     sameAs: [
       'https://www.instagram.com/aniqstudio_westmarredpally/'

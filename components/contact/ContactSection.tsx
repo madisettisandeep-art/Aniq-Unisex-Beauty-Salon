@@ -75,6 +75,9 @@ export const ContactSection: React.FC = () => {
                   <p className="text-[11px] text-[#9E6B25] font-bold mt-1">
                     Landmark: {SALON_STATS.landmark}
                   </p>
+                  <p className="text-[11px] text-[#5A424B] font-medium mt-0.5">
+                    Service Area: {SALON_STATS.serviceArea}
+                  </p>
                 </div>
               </div>
 
