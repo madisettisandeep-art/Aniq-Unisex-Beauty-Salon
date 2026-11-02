@@ -191,8 +191,6 @@ export const CinematicHero: React.FC<CinematicHeroProps> = ({ onOpenBooking }) =
                   />
                 )}
 
-                {/* Subtle top-edge only gradient so transparent navbar links stay legible while 100% of the video is crystal clear */}
-                <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/35 to-transparent pointer-events-none" />
               </div>
             );
           })}

@@ -51,7 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenLookup }) =
       className={`fixed top-0 left-0 right-0 z-50 h-20 transition-all duration-500 ${
         isPastHero
           ? 'bg-cream-50/95 backdrop-blur-md shadow-card border-b border-ivory-200'
-          : 'bg-gradient-to-b from-black/50 via-black/20 to-transparent border-b border-transparent'
+          : 'bg-transparent border-none'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between gap-4">
